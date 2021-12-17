@@ -21,7 +21,7 @@ const NotFoundPage = ({ data, location }) => {
         <div className="row">
             <div className="col-md-4">
                 <div className="card" style={{width: 18 + 'rem'}} >
-                    <img className="card-img-top" src="..." alt="Card image cap" />
+                    <img className="card-img-top" src="#" alt="Card image cap" />
                     <div className="card-body">
                         <h5 className="card-title">Event 1</h5>
                         <p className="card-text">Some quick example text to build on the card title and make up the bulk of
@@ -34,7 +34,7 @@ const NotFoundPage = ({ data, location }) => {
             </div>
             <div className="col-md-4">
                 <div className="card" style={{width: 18 + 'rem'}} >
-                    <img className="card-img-top" src="..." alt="Card image cap" />
+                    <img className="card-img-top" src="#" alt="Card image cap" />
                     <div className="card-body">
                         <h5 className="card-title">Event 2</h5>
                         <p className="card-text">Some quick example text to build on the card title and make up the bulk of
@@ -47,7 +47,7 @@ const NotFoundPage = ({ data, location }) => {
             </div>
             <div className="col-md-4">
                 <div className="card" style={{width: 18 + 'rem'}} >
-                    <img className="card-img-top" src="..." alt="Card image cap" />
+                    <img className="card-img-top" src="#" alt="Card image cap" />
                     <div className="card-body">
                         <h5 className="card-title">Event 3</h5>
                         <p className="card-text">Some quick example text to build on the card title and make up the bulk of
@@ -59,13 +59,11 @@ const NotFoundPage = ({ data, location }) => {
                 </div>
             </div>
         </div>
+<p>Not working ! </p>
         <div className="row">
-            <div className="col-md-12">
-                <pretix-widget event="https://pretix.eu/demo/democon/"></pretix-widget>
-                <pretix-widget event="https://pretix.eu/demo/democon/" disable-vouchers></pretix-widget>
-                <pretix-widget event="https://pretix.eu/demo/series/" style="list"></pretix-widget>
-                <pretix-widget event="https://pretix.eu/demo/series/" style="calendar"></pretix-widget>
-                <pretix-widget event="https://pretix.eu/demo/series/" style="week"></pretix-widget>
+            <div className="col-md-12" dangerouslySetInnerHTML={{__html: "<pretix-widget event='https://pretix.eu/demo/democon/'></pretix-widget> <pretix-widget event='https://pretix.eu/demo/democon/' disable-vouchers></pretix-widget> <pretix-widget event='https://pretix.eu/demo/series/' style='list'></pretix-widget> <pretix-widget event='https://pretix.eu/demo/series/' style='red'></pretix-widget> <pretix-widget event='https://pretix.eu/demo/series/' style='calendar'></pretix-widget>"}} />
+            
+<div><p>Not working !</p></div>
                 <noscript>
                     <div className="pretix-widget">
                         <div className="pretix-widget-info-message">
@@ -74,23 +72,15 @@ const NotFoundPage = ({ data, location }) => {
                         </div>
                     </div>
                 </noscript>
-            </div>
         </div>
     </div>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous" />
-    <link rel="stylesheet" type="text/css" href="https://pretix.eu/demo/democon/widget/v1.css" />	
+    <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="https://pretix.eu/demo/democon/widget/v1.css" />
     <script type="text/javascript" src="https://pretix.eu/widget/v1.en.js" async></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossOrigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossOrigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossOrigin="anonymous"></script>
-      <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossOrigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossOrigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossOrigin="anonymous"></script>
     </Layout>
   )
 }
