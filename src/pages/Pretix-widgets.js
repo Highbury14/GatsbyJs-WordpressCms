@@ -26,7 +26,7 @@ const NotFoundPage = ({ data, location }) => {
                         <h5 className="card-title">Event 1</h5>
                         <p className="card-text">Some quick example text to build on the card title and make up the bulk of
                             the card's content.</p>
-                            <pretix-button className="btn btn-primay" event="https://pretix.eu/testCompanyEnv/testEvent/live" items="item_6424=1">
+                            <pretix-button skip-ssl-check className="btn btn-primay" event="https://pretix.eu/testCompanyEnv/testEvent/live" items="item_6424=1">
                                 Buy ticket!
                             </pretix-button>
                     </div>
@@ -39,7 +39,7 @@ const NotFoundPage = ({ data, location }) => {
                         <h5 className="card-title">Event 2</h5>
                         <p className="card-text">Some quick example text to build on the card title and make up the bulk of
                             the card's content.</p>
-                            <pretix-button className="btn btn-primay" event="https://pretix.eu/demo/democon/" items="item_6424=1">
+                            <pretix-button skip-ssl-check className="btn btn-primay" event="https://pretix.eu/demo/democon/" items="item_6424=1">
                                 Buy ticket!
                             </pretix-button>
                     </div>
@@ -52,7 +52,7 @@ const NotFoundPage = ({ data, location }) => {
                         <h5 className="card-title">Event 3</h5>
                         <p className="card-text">Some quick example text to build on the card title and make up the bulk of
                             the card's content.</p>
-                            <pretix-button className="btn btn-primay" event="https://pretix.eu/demo/democon/" items="item_6424=1">
+                            <pretix-button skip-ssl-check className="btn btn-primay" event="https://pretix.eu/demo/democon/" items="item_6424=1">
                                 Buy ticket!
                             </pretix-button>
                     </div>
@@ -61,7 +61,7 @@ const NotFoundPage = ({ data, location }) => {
         </div>
 <p>Not working ! </p>
         <div className="row">
-            <div className="col-md-12" dangerouslySetInnerHTML={{__html: "<pretix-widget event='https://pretix.eu/demo/democon/'></pretix-widget> <pretix-widget event='https://pretix.eu/demo/democon/' disable-vouchers></pretix-widget> <pretix-widget event='https://pretix.eu/demo/series/' style='list'></pretix-widget> <pretix-widget event='https://pretix.eu/demo/series/' style='red'></pretix-widget> <pretix-widget event='https://pretix.eu/demo/series/' style='calendar'></pretix-widget>"}} />
+            <div className="col-md-12" dangerouslySetInnerHTML={{__html: "<pretix-widget event='https://pretix.eu/demo/democon/' skip-ssl-check></pretix-widget> <pretix-widget event='https://pretix.eu/demo/democon/' disable-vouchers skip-ssl-check></pretix-widget> <pretix-widget event='https://pretix.eu/demo/series/' style='list' skip-ssl-check></pretix-widget> <pretix-widget skip-ssl-check event='https://pretix.eu/demo/series/' style='red'></pretix-widget> <pretix-widget skip-ssl-check event='https://pretix.eu/demo/series/' style='calendar'></pretix-widget>"}} />
             
 <div><p>Not working !</p></div>
                 <noscript>
