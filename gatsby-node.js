@@ -23,10 +23,10 @@ exports.createPages = async gatsbyUtilities => {
   if (posts.WpPosts.length) {
 
     // If there are posts, create pages for them
-    await createIndividualBlogPostPages(() => { posts.WpPosts, gatsbyUtilities })
+    await createIndividualBlogPostPages({ posts.WpPosts, gatsbyUtilities })
     
     // And a paginated archive
-    await createBlogPostArchive(() => { posts.WpPosts, gatsbyUtilities })
+    await createBlogPostArchive({ posts.WpPosts, gatsbyUtilities })
   }
 
   if (!posts.WpPages.length) {
@@ -34,7 +34,7 @@ exports.createPages = async gatsbyUtilities => {
   }
 
   // If there are wp-pages, create pages for them
-  await createIndividualPages(() => { posts.WpPages, gatsbyUtilities })
+  await createIndividualPages({ posts.WpPages, gatsbyUtilities })
 }
 
 /**
