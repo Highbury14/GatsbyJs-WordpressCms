@@ -97,7 +97,6 @@ export const pageQuery = graphql`
   ) {
     page: wpPage(id: { eq: $id }) {
       id
-      excerpt
       content
       title
       date(formatString: "MMMM DD, YYYY")

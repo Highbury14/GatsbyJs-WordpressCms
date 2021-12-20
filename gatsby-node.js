@@ -14,7 +14,7 @@ const chunk = require(`lodash/chunk`)
 exports.createPages = async gatsbyUtilities => {
   // Query our posts from the GraphQL server
   const posts = await getPosts(gatsbyUtilities)
-
+  // console.log(posts);
   // If there are no posts in WordPress, don't do anything
   if (!posts.WpPosts.length && !posts.WpPages.length) {
     return
@@ -198,7 +198,7 @@ async function getPosts({ graphql, reporter }) {
 
   if (graphqlResult.errors) {
     reporter.panicOnBuild(
-      `There was an error loading your blog posts`,
+      `There was an error loading the blog posts`,
       graphqlResult.errors
     )
     return
@@ -230,14 +230,14 @@ async function getPosts({ graphql, reporter }) {
 
   if (graphqlPageResult.errors) {
     reporter.panicOnBuild(
-      `There was an error loading your blog posts`,
+      `There was an error loading the wp-pages`,
       graphqlPageResult.errors
     )
     return
   }
-
+  // console.log(graphqlResult.data.allWpPost.edges);
   return {
-    'WpPosts': graphqlResult.data.allWpPost.edges,
-    'WpPages': graphqlPageResult.data.allWpPage.edges
+    'WpPosts': Promise.all(graphqlResult.data.allWpPost.edges),
+    'WpPages': Promise.all(graphqlPageResult.data.allWpPage.edges)
   }
 }
