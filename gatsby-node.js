@@ -14,14 +14,14 @@ const chunk = require(`lodash/chunk`)
 exports.createPages = async gatsbyUtilities => {
   // Query our posts from the GraphQL server
   const posts = await getPosts(gatsbyUtilities)
-  // console.log(posts);
   // If there are no posts in WordPress, don't do anything
-  if (!posts.WpPosts.length && !posts.WpPages.length) {
+  if (!Promise.all(posts.WpPosts.length) && !Promise.all(posts.WpPages.length)) {
+    console.log(Promise.all(posts));
     return
   }
 
-  if (posts.WpPosts.length) {
-    const wpPosts1 = posts.WpPosts
+  if (Promise.all(posts.WpPosts.length)) {
+    const wpPosts1 = Promise.all(posts.WpPosts)
     // If there are posts, create pages for them
     await createIndividualBlogPostPages({ wpPosts1, gatsbyUtilities })
     
@@ -29,10 +29,10 @@ exports.createPages = async gatsbyUtilities => {
     await createBlogPostArchive({ wpPosts1, gatsbyUtilities })
   }
 
-  if (!posts.WpPages.length) {
+  if (!Promise.all(posts.WpPages.length)) {
     return
   }
-  const wpPages1 = posts.WpPages
+  const wpPages1 = Promise.all(posts.WpPages)
   // If there are wp-pages, create pages for them
   await createIndividualPages({ wpPages1, gatsbyUtilities })
 }
