@@ -5,14 +5,25 @@ import parse from "html-react-parser"
 const Layout = ({ isHomePage, children }) => {
   const {
     wp: {
-      generalSettings: { title },
+      generalSettings: { title }
     },
+    allWpMenuItem: { edges }
   } = useStaticQuery(graphql`
     query LayoutQuery {
       wp {
         generalSettings {
           title
           description
+        }
+      }
+      allWpMenuItem(filter: {menu: {node: {name: {eq: "Main Menu"}}}}) {
+        edges {
+          node {
+            label
+            title
+            url
+            path
+          }
         }
       }
     }
@@ -30,6 +41,18 @@ const Layout = ({ isHomePage, children }) => {
             {title}
           </Link>
         )}
+        <ul style={{ listStyle: `none`, display: `flex`, margin: 0 }}>
+          {edges.map(item => (
+            <li key={item.node.url} style={{ margin: `0 10px` }}>
+              <Link
+                to={item.node.url}
+                  style={{ textDecoration: `none`, fontFamily: `sans-serif` }}
+                >
+                {item.node.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </header>
 
       <main>{children}</main>
