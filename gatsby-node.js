@@ -3,7 +3,7 @@ const chunk = require(`lodash/chunk`)
 
 // This is a simple debugging tool
 // dd() will prettily dump to the terminal and kill the process
-// const { dd } = require(`dumper.js`)
+const { dd } = require(`dumper.js`)
 
 /**
  * exports.createPages is a built-in Gatsby Node API.
@@ -13,26 +13,29 @@ const chunk = require(`lodash/chunk`)
  */
 exports.createPages = async gatsbyUtilities => {
   // Query our posts from the GraphQL server
-  const posts = await getPosts(gatsbyUtilities)
+  const posts = await Promise.allSettled([getPosts(gatsbyUtilities)])
+  // console.log(posts[0].value[0].value.WpPosts[0])
+  const wpPosts1 = posts[0].value[0].value.WpPosts
+  const wpPages1 = posts[0].value[0].value.WpPages
+  // console.log(wpPages1)
   // If there are no posts in WordPress, don't do anything
-  if (!Promise.all(posts.WpPosts.length) && !Promise.all(posts.WpPages.length)) {
-    console.log(Promise.all(posts));
+  if (!wpPosts1.length && !wpPages1.length) {
     return
   }
-
-  if (Promise.all(posts.WpPosts.length)) {
-    const wpPosts1 = Promise.all(posts.WpPosts)
+  
+  if (wpPosts1.length) {
+    // console.log(wpPosts1)
+    // dd("The end.")
     // If there are posts, create pages for them
     await createIndividualBlogPostPages({ wpPosts1, gatsbyUtilities })
     
     // And a paginated archive
     await createBlogPostArchive({ wpPosts1, gatsbyUtilities })
   }
-
-  if (!Promise.all(posts.WpPages.length)) {
+  
+  if (!wpPages1.length) {
     return
   }
-  const wpPages1 = Promise.all(posts.WpPages)
   // If there are wp-pages, create pages for them
   await createIndividualPages({ wpPages1, gatsbyUtilities })
 }
@@ -40,9 +43,9 @@ exports.createPages = async gatsbyUtilities => {
 /**
  * This function creates all the individual pages in this site.
  */
-const createIndividualPages = async ({ pages, gatsbyUtilities }) =>
+const createIndividualPages = async ({ wpPages1, gatsbyUtilities }) =>
   Promise.all(
-    pages.map(({ previous, page, next }) =>
+    wpPages1.map(({ previous, page, next }) =>
       // createPage is an action passed to createPages
       // See https://www.gatsbyjs.com/docs/actions#createPage for more info
       gatsbyUtilities.actions.createPage({
@@ -72,9 +75,12 @@ const createIndividualPages = async ({ pages, gatsbyUtilities }) =>
 /**
  * This function creates all the individual blog pages in this site
  */
-const createIndividualBlogPostPages = async ({ posts, gatsbyUtilities }) =>
+const createIndividualBlogPostPages = async ({ wpPosts1, gatsbyUtilities }) => {
+  // const wpPosts1 = await Promise.allSettled([wpPosts1])
+  // console.log(wpPosts1)
+  // dd("The End")
   Promise.all(
-    posts.map(({ previous, post, next }) =>
+    wpPosts1.map(({ previous, post, next }) =>
       // createPage is an action passed to createPages
       // See https://www.gatsbyjs.com/docs/actions#createPage for more info
       gatsbyUtilities.actions.createPage({
@@ -100,11 +106,12 @@ const createIndividualBlogPostPages = async ({ posts, gatsbyUtilities }) =>
       })
     )
   )
+}
 
 /**
  * This function creates all the individual blog pages in this site
  */
-async function createBlogPostArchive({ posts, gatsbyUtilities }) {
+async function createBlogPostArchive({ wpPosts1, gatsbyUtilities }) {
   const graphqlResult = await gatsbyUtilities.graphql(/* GraphQL */ `
     {
       wp {
@@ -116,21 +123,22 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
   `)
 
   const { postsPerPage } = graphqlResult.data.wp.readingSettings
-
-  const postsChunkedIntoArchivePages = chunk(posts, postsPerPage)
+  const postsChunkedIntoArchivePages = chunk(wpPosts1, postsPerPage)
   const totalPages = postsChunkedIntoArchivePages.length
-
+  
   return Promise.all(
-    postsChunkedIntoArchivePages.map(async (_posts, index) => {
+    postsChunkedIntoArchivePages.map(async (_wpPosts1, index) => {
+      // console.log(_wpPosts1)
+      // console.log("Index: " + index)
       const pageNumber = index + 1
 
       const getPagePath = page => {
         if (page > 0 && page <= totalPages) {
-          // Since our homepage is our blog page
-          // we want the first page to be "/" and any additional pages
+          // Our homepage is not our blog page
+          // we want the first page to be "/blog" and any additional pages
           // to be numbered.
           // "/blog/2" for example
-          return page === 1 ? `/` : `/blog/${page}`
+          return page === 1 ? `/blog/` : `/blog/${page}`
         }
 
         return null
@@ -236,8 +244,9 @@ async function getPosts({ graphql, reporter }) {
     return
   }
   // console.log(graphqlResult.data.allWpPost.edges);
-  return {
-    'WpPosts': Promise.all(graphqlResult.data.allWpPost.edges),
-    'WpPages': Promise.all(graphqlPageResult.data.allWpPage.edges)
-  }
+  // console.log(graphqlPageResult.data.allWpPage.edges);
+  return await Promise.allSettled([{
+    'WpPosts': graphqlResult.data.allWpPost.edges,
+    'WpPages': graphqlPageResult.data.allWpPage.edges
+  }])
 }

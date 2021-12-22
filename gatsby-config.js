@@ -29,6 +29,9 @@ module.exports = {
         url:
           process.env.WPGRAPHQL_URL ||
           `http://wpv5-7demo/graphql`,
+        schema: {
+          timeout: 1999999999
+        }
       },
     },
 

@@ -4,10 +4,10 @@ import { GatsbyImage } from "gatsby-plugin-image"
 import parse from "html-react-parser"
 
 // We're using Gutenberg so we need the block styles
-// these are copied into this project due to a conflict in the postCSS
+// these are copied into this project due to a conflict in the pageCSS
 // version used by the Gatsby and @wordpress packages that causes build
 // failures.
-// @todo update this once @wordpress upgrades their postcss version
+// @todo update this once @wordpress upgrades their pagecss version
 import "../css/@wordpress/block-library/build-style/style.css"
 import "../css/@wordpress/block-library/build-style/theme.css"
 
@@ -15,27 +15,27 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
-const BlogPostTemplate = ({ data: { previous, next, post } }) => {
+const DefaultPageTemplate = ({ data: { previous, next, page } }) => {
   const featuredImage = {
-    data: post.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData,
-    alt: post.featuredImage?.node?.alt || ``,
+    data: page.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData,
+    alt: page.featuredImage?.node?.alt || ``,
   }
 
   return (
     <Layout>
-      <Seo title={post.title} description={post.excerpt} />
+      <Seo title={page.title} description={page.excerpt} />
 
       <article
-        className="blog-post"
+        className="blog-page"
         itemScope
         itemType="http://schema.org/Article"
       >
         <header>
-          <h1 itemProp="headline">{parse(post.title)}</h1>
+          <h1 itemProp="headline">{parse(page.title)}</h1>
 
-          <p>{post.date}</p>
+          <p>{page.date}</p>
 
-          {/* if we have a featured image for this post let's display it */}
+          {/* if we have a featured image for this page let's display it */}
           {featuredImage?.data && (
             <GatsbyImage
               image={featuredImage.data}
@@ -45,8 +45,8 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
           )}
         </header>
 
-        {!!post.content && (
-          <section itemProp="articleBody">{parse(post.content)}</section>
+        {!!page.content && (
+          <section itemProp="articleBody">{parse(page.content)}</section>
         )}
 
         <hr />
@@ -56,7 +56,7 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
         </footer>
       </article>
 
-      <nav className="blog-post-nav">
+      <nav className="blog-page-nav">
         <ul
           style={{
             display: `flex`,
@@ -87,7 +87,7 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
   )
 }
 
-export default BlogPostTemplate
+export default DefaultPageTemplate
 
 export const pageQuery = graphql`
   query WpPageById(
